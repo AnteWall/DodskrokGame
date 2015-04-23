@@ -3,7 +3,6 @@ var app = angular.module('dk', ['ngAudio']);
 app.controller('MenuCtrl',function($scope,$rootScope){
 
   $scope.profile = function(name){
-    console.log(name);
     $rootScope.$broadcast('profile',name);
   }
 
@@ -216,6 +215,9 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
       else if(data == 'cc'){
         populateCC();
       }
+      else if(data == '720'){
+	populate720();		
+      }
     });
     function populateSTABEN(){
       $scope.players = []
@@ -265,6 +267,20 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
       $scope.players.push({'name':"Mat"});
       $scope.players.push({'name':"Webb"});
     }
+  function populate720(){
+      $scope.players = []
+      $scope.players.push({'name':"Ordförande"});
+      $scope.players.push({'name':"Vice Ordförande"});
+      $scope.players.push({'name':"Kassör"});
+      $scope.players.push({'name':"Reseansvarig"});
+      $scope.players.push({'name':"Eventansvarig"});
+      $scope.players.push({'name':"Spons 1"});
+      $scope.players.push({'name':"Spons 2"});
+      $scope.players.push({'name':"PR/Info"});
+      $scope.players.push({'name':"Web/Foto/Film"});
+      $scope.players.push({'name':"Tryck"});
+    }
+   
     function populateLists(){
       $scope.lists.push({'title':"Ta 5 klunkar", index: -1});
       $scope.lists.push({'title':"Ge bort 5 klunkar", index: -1});
