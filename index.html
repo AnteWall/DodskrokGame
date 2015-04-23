@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-
+<meta charset="utf-8">
 <title>Dödskrök.se - Spel - Powered by STABEN</title>
 <link href='http://fonts.googleapis.com/css?family=Roboto:100,700italic,300,700,400' rel='stylesheet' type='text/css'>
 <link rel='stylesheet' href='bower_components/typicons/src/font/typicons.min.css' />
@@ -24,9 +24,9 @@
 </script>-->
 </head>
 <body ng-app="dk">
-  <video ng-hide="$root.hideFlames" autoplay loop poster="./img/fire.png" id="bgvid">
+ <!-- <video ng-hide="$root.hideFlames" autoplay loop poster="./img/fire.png" id="bgvid">
     <source src="fire.webm" type="video/webm">
-  </video>
+  </video>--!>
 <div ng-hide="$root.hideMenu" id="navigation">
   <h2 class="staben">STABEN</h2>
   <p>presenterar</p>
@@ -53,7 +53,7 @@
 
   </nav>
   <p class="mail">Vill du ha en profil inlagd? <br>Maila ante@dödskrök.se</p>
-  <p class="version">Version 3.0.2 - <a href="changelog.html">Changelog</a></p>
+  <p class="version">Version 3.0.3 - <a href="changelog.html">Changelog</a></p>
 </div>
 <div class="container" ng-controller="DkCtrl">
 

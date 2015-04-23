@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'typicons';
-  src: url("bower_components/typicons/src/font/typicons.eot");
-  src: url("bower_components/typicons/src/font/typicons.eot?#iefix") format('embedded-opentype'),
-  url("bower_components/typicons/src/font/typicons.woff") format('woff'),
-  url("bower_components/typicons/src/font/typicons.ttf") format('truetype'),
-  url("bower_components/typicons/src/font/typicons.svg#typicons") format('svg');
+  src: url("../bower_components/typicons/src/font/typicons.eot");
+  src: url("../bower_components/typicons/src/font/typicons.eot?#iefix") format('embedded-opentype'),
+  url("../bower_components/typicons/src/font/typicons.woff") format('woff'),
+  url("../bower_components/typicons/src/font/typicons.ttf") format('truetype'),
+  url("../bower_components/typicons/src/font/typicons.svg#typicons") format('svg');
   font-weight: normal;
   font-style: normal;
 }

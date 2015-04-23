@@ -12,6 +12,16 @@ app.controller('ChangelogCtrl',function($scope,$rootScope){
 
   $scope.changelogs = [
       {
+	"version":"3.0.3",
+	"changes":[
+		{		
+		"description": "Disablade Flames tills det är löst på alla browsers"
+		}
+		,{
+		"description": "Fixade include errors på ikoner"
+		}
+	]},
+      {
       "version": "3.0.2",
       "changes": [
         {
