@@ -1,0 +1,70 @@
+extends layout
+
+block content
+  .container(ng-controller='DkCtrl')
+    .top-bar
+      button(ng-click='startGame()') Start Game
+      p.rounds Spelade rundor: {{round}}
+      p.next(ng-show='round > 0 && playing == false') N&auml;sta runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder
+      .buttons
+        span.typcn.typcn-info-large(ng-click='showPopupHelp()')
+        span.typcn.typcn-cog(ng-click='showSettings()')
+    .row
+      .col-xs(ng-repeat='list in lists')
+        .box
+          .list
+            img.arrow(ng-hide='list.index == -1', ng-style='arrowPosition(list)', src='images/arrow.png')
+            h4
+              // <span ng-click="openChart(list)" class="typcn typcn-chart-pie-outline"></span>
+              | {{list.title}}
+              span.typcn.typcn-delete(ng-click='removeList(list)')
+                span
+            ul
+              li(ng-class='selected($index,$parent.$index)', ng-repeat='player in players')
+                | {{player.name}}
+                span.typcn.typcn-delete(ng-click='removePlayer(player)')
+                  span
+            .add-player(ng-click='addPlayerBox()')
+              p Ny spelare
+              span.typcn.typcn-plus
+    .fadeout(ng-show='$root.blackout', ng-click='closePopup()')
+    .popup(ng-show='popup.show')
+      .pad
+        .set(ng-show="popup.type == 'settings'")
+          h2 Inst&auml;llningar
+          p Minsta tiden till n&auml;sta runda (minuter):
+          input(type='number', ng-model='startMin')
+          p H&ouml;gsta tiden till n&auml;sta runda (minuter):
+          input(type='number', ng-model='startMax')
+          label Nytt uppdrag
+          input(type='text', ng-model='listitem')
+          button(ng-click='newListItem()') L&auml;gg till
+          label G&ouml;m Menyn
+          input(type='checkbox', ng-model='$root.hideMenu')
+          label G&ouml;m Flames
+          input(type='checkbox', ng-model='$root.hideFlames')
+        div(ng-show="popup.type == 'new-player'")
+          h2 Ny Spelare
+          label Namn
+          input(type='text', ng-model='playername')
+          button(ng-click='newPlayer()') L&auml;gg till
+        div(ng-show="popup.type == 'help'")
+          h2 Hur k&ouml;r man?
+          p.text
+            | &Auml;r f&ouml;rfesten lite sl&ouml;? Eller kanske vill ni bara bli riktiga d&ouml;dskr&ouml;kare? Kolla d&aring; hit!
+            br
+            br
+            |           B&ouml;rja med att st&auml;lla in vilka inst&auml;llningar ni vill anv&auml;nda med hj&auml;lp av
+            span.typcn.typcn-cog
+              | knappen. St&auml;ll in hur ofta hjulen ska snurra. St&auml;ll in alla spelare som ska vara med och k&ouml;ra. Det kan &auml;ven vara kul att l&auml;gga till en spelare &quot;Alla&quot; som betyder att alla f&aring;r dricka.
+              br
+              br
+              |           N&auml;r ni har st&auml;llt in allt korrekt &auml;r det bara att klicka p&aring; &quot;Start Game&quot; s&aring; kommer den direkt att b&ouml;rja snurra f&ouml;rsta rundan! De personerna som pilarna pekar p&aring; f&aring;r g&ouml;ra uppdraget som den pekar p&aring;. Sedan kommer den v&auml;nta s&aring; l&auml;nge som ni har st&auml;llt in tiden p&aring; innan den b&ouml;rjar k&ouml;ra igen!
+              br
+              br
+              |           Spelare och tider kan &auml;ndras under spelets g&aring;ng ifall ni vill det. Inst&auml;llningarna kommer automatiskt att anv&auml;ndas vid n&auml;sta runda!
+              br
+              br
+              |           Vem klarar sig l&auml;ngst?! Finns bara ett s&auml;tt att f&aring; reda p&aring; det!
+      .footer
+        button(ng-click='closePopup()') Stäng
