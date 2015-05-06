@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 
-<title>Dödskrök.se - Spel - Powered by STABEN</title>
+<meta charset="utf-8">
+<title>DÃ¶dskrÃ¶k.se - Spel - Powered by STABEN</title>
 <link href='http://fonts.googleapis.com/css?family=Roboto:100,700italic,300,700,400' rel='stylesheet' type='text/css'>
 <link rel='stylesheet' href='bower_components/typicons/src/font/typicons.min.css' />
 <link rel="stylesheet" href="css/normalize.css">
@@ -23,43 +24,39 @@
 </script>-->
 </head>
 <body ng-app="dk">
- <!-- <video ng-hide="$root.hideFlames" autoplay loop poster="./img/fire.png" id="bgvid">
+  <video ng-hide="$root.hideFlames" autoplay loop id="bgvid">
     <source src="fire.webm" type="video/webm">
-  </video>--!>
+  </video>
 <div ng-hide="$root.hideMenu" id="navigation">
   <h2 class="staben">STABEN</h2>
   <p>presenterar</p>
-  <h3>dödskrök.se</h3>
+  <h3>dÃ¶dskrÃ¶k.se</h3>
   <nav ng-controller="MenuCtrl">
     <ul>
       <li class="active">
-      <a href="index.html">Spelet</a>      
+      <a href="index.html">Spelet</a>
       </li>
       <li>
-      <a ng-click="profile('staben')">Profil - STABEN</a>      
+      <a ng-click="profile('staben')">Profil - STABEN</a>
       </li>
       <li>
-      <a ng-click="profile('dgroup')">Profil - D-Group 14/15</a>      
+      <a ng-click="profile('dgroup')">Profil - D-Group 14/15</a>
       </li>
       <li>
-      <a ng-click="profile('cc')">Profil - CC 13/14</a>      
+      <a ng-click="profile('cc')">Profil - CC 13/14</a>
       </li>
-      <li>
-      <a ng-click="profile('720')">Profil - 720</a>      
-      </li>
- 
     </ul>
 
   </nav>
-  <p class="mail">Vill du ha en profil inlagd? <br>Maila ante@dödskrök.se</p>
-  <p class="version">Version 3.0.3 - <a href="changelog.html">Changelog</a></p>
+  <p class="mail">Vill du ha en profil inlagd? <br>Maila ante@dÃ¶dskrÃ¶k.se</p>
+  <p class="version">Version 3.0.2 - <a href="changelog.html">Changelog</a></p>
 </div>
 <div class="container" ng-controller="DkCtrl">
 
   <div class="top-bar">
     <button ng-click="startGame()">Start Game</button>
     <p class="rounds">Spelade rundor: {{round}}</p>
-    <p ng-show="round > 0 && playing == false" class="next">Nästa runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder</p>
+    <p ng-show="round > 0 && playing == false" class="next">NÃ¤sta runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder</p>
     <div class="buttons">
       <span ng-click="showPopupHelp()" class="typcn typcn-info-large"></span>
       <span ng-click="showSettings()" class="typcn typcn-cog"></span>
@@ -71,15 +68,15 @@
         <div class="list">
 
           <img ng-hide="list.index == -1" class="arrow" ng-style="arrowPosition(list)" src="img/arrow.png">
-          <h4> 
+          <h4>
           <!--<span ng-click="openChart(list)" class="typcn typcn-chart-pie-outline"></span>-->
 
-          {{list.title}} 
+          {{list.title}}
           <span ng-click="removeList(list)" class="typcn typcn-delete"><span>
 
           </h4>
           <ul>
-            <li ng-repeat="player in players">
+            <li ng-class="selected($index,$parent.$index)" ng-repeat="player in players">
             {{player.name}}
 
             <span ng-click="removePlayer(player)" class="typcn typcn-delete"><span>
@@ -89,7 +86,7 @@
             <p>Ny spelare</p>
             <span  class="typcn typcn-plus"></span>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   </div>
@@ -97,40 +94,40 @@
   <div ng-show="popup.show"class="popup">
     <div class="pad">
       <div class="set" ng-show="popup.type == 'settings'">
-        <h2>Inställningar</h2>  
-        <p>Minsta tiden till nästa runda (minuter):</p>
+        <h2>InstÃ¤llningar</h2>
+        <p>Minsta tiden till nÃ¤sta runda (minuter):</p>
         <input type="number" ng-model="startMin">
-        <p>högsta tiden till nästa runda (minuter):</p>
+        <p>HÃ¶gsta tiden till nÃ¤sta runda (minuter):</p>
         <input type="number" ng-model="startMax">
         <label>Nytt uppdrag</label>
         <input type="text" ng-model="listitem">
-        <button ng-click="newListItem()">Lägg till</button>
-        <label>Göm Menyn</label>
+        <button ng-click="newListItem()">LÃ¤gg till</button>
+        <label>GÃ¶m Menyn</label>
         <input type="checkbox" ng-model="$root.hideMenu">
-        <label>Göm Flames</label>
+        <label>GÃ¶m Flames</label>
         <input type="checkbox" ng-model="$root.hideFlames">
       </div>
       <div ng-show="popup.type == 'new-player'">
-        <h2>Ny Spelare</h2>  
+        <h2>Ny Spelare</h2>
         <label>Namn</label>
         <input type="text" ng-model="playername">
-        <button ng-click="newPlayer()">Lägg till</button>
+        <button ng-click="newPlayer()">LÃ¤gg till</button>
       </div>
       <div ng-show="popup.type == 'help'">
-        <h2>Hur kör man?</h2>
-        <p class="text">Är förfesten lite slö? Eller kanske vill ni bara bli riktiga dödskrökare? Kolla då hit! <br>
+        <h2>Hur kÃ¶r man?</h2>
+        <p class="text">Ã„r fÃ¶rfesten lite slÃ¶? Eller kanske vill ni bara bli riktiga dÃ¶dskrÃ¶kare? Kolla dÃ¥ hit! <br>
           <br>
-          Börja med att ställa in vilka inställningar ni vill använda med hjälp av <span class="typcn typcn-cog"> knappen. Ställ in hur ofta hjulen ska snurra. Ställ in alla spelare som ska vara med och köra. Det kan även vara kul att lägga till en spelare "Alla" som betyder att alla får dricka.
+          BÃ¶rja med att stÃ¤lla in vilka instÃ¤llningar ni vill anvÃ¤nda med hjÃ¤lp av <span class="typcn typcn-cog"> knappen. StÃ¤ll in hur ofta hjulen ska snurra. StÃ¤ll in alla spelare som ska vara med och kÃ¶ra. Det kan Ã¤ven vara kul att lÃ¤gga till en spelare "Alla" som betyder att alla fÃ¥r dricka.
           <br><br>
-          När ni har ställt in allt korrekt är det bara att klicka på "Start Game" så kommer den direkt att börja snurra första rundan! De personerna som pilarna pekar på får göra uppdraget som den pekar på. Sedan kommer den vänta så länge som ni har ställt in tiden på innan den börjar köra igen!
+          NÃ¤r ni har stÃ¤llt in allt korrekt Ã¤r det bara att klicka pÃ¥ "Start Game" sÃ¥ kommer den direkt att bÃ¶rja snurra fÃ¶rsta rundan! De personerna som pilarna pekar pÃ¥ fÃ¥r gÃ¶ra uppdraget som den pekar pÃ¥. Sedan kommer den vÃ¤nta sÃ¥ lÃ¤nge som ni har stÃ¤llt in tiden pÃ¥ innan den bÃ¶rjar kÃ¶ra igen!
           <br><br>
-          Spelare och tider kan ändras under spelets gång ifall ni vill det. Inställningarna kommer automatiskt att användas vid nästa runda!
+          Spelare och tider kan Ã¤ndras under spelets gÃ¥ng ifall ni vill det. InstÃ¤llningarna kommer automatiskt att anvÃ¤ndas vid nÃ¤sta runda!
           <br><br>
-          Vem klarar sig längst?! Finns bara ett sätt att få reda på det!
+          Vem klarar sig lÃ¤ngst?! Finns bara ett sÃ¤tt att fÃ¥ reda pÃ¥ det!
       </div>
     </div>
     <div class="footer">
-      <button ng-click="closePopup()">Stäng</button>
+      <button ng-click="closePopup()">Stï¿½ng</button>
     </div>
   </div>
 

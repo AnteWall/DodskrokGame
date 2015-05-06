@@ -3,6 +3,7 @@ var app = angular.module('dk', ['ngAudio']);
 app.controller('MenuCtrl',function($scope,$rootScope){
 
   $scope.profile = function(name){
+    console.log(name);
     $rootScope.$broadcast('profile',name);
   }
 
@@ -11,21 +12,11 @@ app.controller('MenuCtrl',function($scope,$rootScope){
 app.controller('ChangelogCtrl',function($scope,$rootScope){
 
   $scope.changelogs = [
-      {
-	"version":"3.0.3",
-	"changes":[
-		{		
-		"description": "Disablade Flames tills det är löst på alla browsers"
-		}
-		,{
-		"description": "Fixade include errors på ikoner"
-		}
-	]},
-      {
+    {
       "version": "3.0.2",
       "changes": [
         {
-          "description":"La till flames i bakgrunden, kan gömmas i inställningar."
+          "description":"La till flames i bakgrunden, kan gÃ¶mmas i instÃ¤llningar."
         },
 
       ]
@@ -34,13 +25,13 @@ app.controller('ChangelogCtrl',function($scope,$rootScope){
       "version": "3.0.1",
       "changes": [
         {
-          "description":"La till profiler (maila ante@dödskrök.se för att få er tillagd)"
+          "description":"La till profiler (maila ante@dÃ¶dskrÃ¶k.se fÃ¶r att fÃ¥ er tillagd)"
         },
         {
           "description":"La till Changelog"
         },
         {
-          "description":"La till versionnummer på spelet"
+          "description":"La till versionnummer pÃ¥ spelet"
         },
       ]
     },
@@ -51,13 +42,13 @@ app.controller('ChangelogCtrl',function($scope,$rootScope){
           "description":"Ny design"
         },
         {
-          "description":"Uppdaterade slumpgeneratorn till pilar från att färglägga list elementen."
+          "description":"Uppdaterade slumpgeneratorn till pilar frÃ¥n att fÃ¤rglÃ¤gga list elementen."
         },
         {
-          "description":"La till så man kan gömma menyn"
+          "description":"La till sÃ¥ man kan gÃ¶mma menyn"
         },
         {
-          "description":"Countdown timer tills nästa runda, visar hur lång tid det är tills nästa som minsta samt största. Tiden visas fortfarande inte tills nästa runda börjar."
+          "description":"Countdown timer tills nÃ¤sta runda, visar hur lÃ¥ng tid det Ã¤r tills nÃ¤sta som minsta samt stÃ¶rsta. Tiden visas fortfarande inte tills nÃ¤sta runda bÃ¶rjar."
         },
       ]
     }
@@ -70,7 +61,7 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
 
   $scope.round = 0;
   $scope.playing = false;
-	$scope.sound = ngAudio.load("sprit.mp3");
+  $scope.sound = ngAudio.load("sprit.mp3");
   $scope.lists = [];
   $scope.players = [];
   $scope.popup = {}
@@ -87,27 +78,34 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
     $scope.sound.play();
 
     angular.forEach($scope.lists,function(list){
-        list.index = Math.floor(Math.random() * $scope.players.length);
-        rollList(list); 
+      list.index = Math.floor(Math.random() * $scope.players.length);
+      rollList(list);
     });
 
-	  var checkMusic = $interval(function(){
-			if(finishedPlaying()){
-				$scope.playing = false;
+    var checkMusic = $interval(function(){
+      if(finishedPlaying()){
+        $scope.playing = false;
         $scope.round += 1;
-				$interval.cancel(checkMusic);				
-				randomizeNextRound();				
-			}
-		},100);
+        $interval.cancel(checkMusic);
+        randomizeNextRound();
+      }
+    },100);
   }
 
   function clock(){
-    $interval(function(){    
-      $scope.timeSinceLastRound += 1000;      
+    $interval(function(){
+      $scope.timeSinceLastRound += 1000;
     },1000)
   }
 
-  
+
+  $scope.selected = function(index,listIndex){
+    //console.log(index,listIndex);
+    if($scope.playing)
+    return;
+    if(index == $scope.lists[listIndex].index)
+    return 'active'
+  }
 
   $scope.getMinTimeLeft = function(){
     var time = $scope.startMin*60 - ($scope.timeSinceLastRound/1000)
@@ -163,7 +161,7 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
     $scope.popup.type = 'settings';
   }
   $scope.closePopup = function(){
-    $rootScope.blackout = false;    
+    $rootScope.blackout = false;
     $scope.popup.show = false;
   }
   function nextIndex(list,callback){
@@ -179,6 +177,8 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
     var titleHeight = 60;
     var itemHeight = 50;
     var pos = titleHeight + (itemHeight * list.index) + marginTop;
+    if(!$scope.playing)
+    pos += 10; //If not playing, add 10px beacuse of scale of transform
     return {'top': pos+'px'};
   }
 
@@ -186,115 +186,97 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
     if($scope.playing){
       $timeout(function(){
         nextIndex(list,function(){
-          rollList(list);  
+          rollList(list);
         });
       },(randomTime(10,400)/1000));
     }
   }
 
-  	function finishedPlaying(){
-	  	if($scope.sound.remaining <= 0.8){
-		  	return true;
-		  }
-		  return false;
-	  }
-    function randomizeNextRound(){
-      var nextTime = randomTime($scope.startMin*60,$scope.startMax*60)
-      $scope.timeSinceLastRound = 0;
-      $timeout(function(){
-        $scope.startGame();
-      },nextTime);
+  function finishedPlaying(){
+    if($scope.sound.remaining <= 0.8){
+      return true;
     }
+    return false;
+  }
+  function randomizeNextRound(){
+    var nextTime = randomTime($scope.startMin*60,$scope.startMax*60)
+    $scope.timeSinceLastRound = 0;
+    $timeout(function(){
+      $scope.startGame();
+    },nextTime);
+  }
 
-  	/* Gets a random time between min and max in seconds */
-	  function randomTime(min,max)
-	  {
-		  return Math.floor(Math.random()*(max-min+1)+min) * 1000;	
-	  }
-    function setup(){
-      populateLists();
-      populateSTABEN();
+  /* Gets a random time between min and max in seconds */
+  function randomTime(min,max)
+  {
+    return Math.floor(Math.random()*(max-min+1)+min) * 1000;
+  }
+  function setup(){
+    populateLists();
+    populateSTABEN();
+  }
+  $scope.$on('profile',function(event,data){
+    if(data == 'staben'){
+      populateSTABEN()
     }
-    $scope.$on('profile',function(event,data){
-      if(data == 'staben'){
-        populateSTABEN()
-      }
-      else if(data == 'dgroup'){
-        populateDGROUP();
-      }
-      else if(data == 'cc'){
-        populateCC();
-      }
-      else if(data == '720'){
-	populate720();		
-      }
-    });
-    function populateSTABEN(){
-      $scope.players = []
-      $scope.players.push({'name':"General"});
-      $scope.players.push({'name':"Öl & Bar"});
-      $scope.players.push({'name':"Fadderansvarig"});
-      $scope.players.push({'name':"Spons"});
-      $scope.players.push({'name':"Biljett"});
-      $scope.players.push({'name':"Ljus & Ljus"});
-      $scope.players.push({'name':"Gûckel"});
-      $scope.players.push({'name':"Kassör"});
-      $scope.players.push({'name':"Tryck"});
-      $scope.players.push({'name':"Werk"});
-      $scope.players.push({'name':"Bokning"});
-      $scope.players.push({'name':"Nollegrupp"});
-      $scope.players.push({'name':"Mat"});
-      $scope.players.push({'name':"Webb"});
+    else if(data == 'dgroup'){
+      populateDGROUP();
     }
-    function populateCC(){
-      $scope.players = []      
-      $scope.players.push({'name':"Chef"});
-      $scope.players.push({'name':"Spons"});
-      $scope.players.push({'name':"Dryck"});
-      $scope.players.push({'name':"Klipp und Klister"});
-      $scope.players.push({'name':"Biljett"});
-      $scope.players.push({'name':"PR"});
-      $scope.players.push({'name':"Kassör"});
-      $scope.players.push({'name':"Tryck"});
-      $scope.players.push({'name':"Klipp und Klister"});      
-      $scope.players.push({'name':"Mat"});      
-      $scope.players.push({'name':"Intendent"});
-      $scope.players.push({'name':"Personal"});
+    else if(data == 'cc'){
+      populateCC();
     }
-    function populateDGROUP(){
-      $scope.players = []
-      $scope.players.push({'name':"Fluffet"});
-      $scope.players.push({'name':"Chief"});
-      $scope.players.push({'name':"Spokk"});
-      $scope.players.push({'name':"Öl & Bar"});
-      $scope.players.push({'name':"Event"});
-      $scope.players.push({'name':"Spons"});
-      $scope.players.push({'name':"J^8"});
-      $scope.players.push({'name':"Kassör"});
-      $scope.players.push({'name':"Tryck"});
-      $scope.players.push({'name':"Werk"});
-      $scope.players.push({'name':"Bokning"});
-      $scope.players.push({'name':"Mat"});
-      $scope.players.push({'name':"Webb"});
-    }
-  function populate720(){
-      $scope.players = []
-      $scope.players.push({'name':"Ordförande"});
-      $scope.players.push({'name':"Vice Ordförande"});
-      $scope.players.push({'name':"Kassör"});
-      $scope.players.push({'name':"Reseansvarig"});
-      $scope.players.push({'name':"Eventansvarig"});
-      $scope.players.push({'name':"Spons 1"});
-      $scope.players.push({'name':"Spons 2"});
-      $scope.players.push({'name':"PR/Info"});
-      $scope.players.push({'name':"Web/Foto/Film"});
-      $scope.players.push({'name':"Tryck"});
-    }
-   
-    function populateLists(){
-      $scope.lists.push({'title':"Ta 5 klunkar", index: -1});
-      $scope.lists.push({'title':"Ge bort 5 klunkar", index: -1});
-      $scope.lists.push({'title':"Svep en öl", index: -1});
-      $scope.lists.push({'title':"Ta 1 Shot", index: -1});
-    }
+  });
+  function populateSTABEN(){
+    $scope.players = []
+    $scope.players.push({'name':"General"});
+    $scope.players.push({'name':"Ã–l & Bar"});
+    $scope.players.push({'name':"Fadderansvarig"});
+    $scope.players.push({'name':"Spons"});
+    $scope.players.push({'name':"Biljett"});
+    $scope.players.push({'name':"Ljus & Ljus"});
+    $scope.players.push({'name':"GÃ¼ckel"});
+    $scope.players.push({'name':"KassÃ¶r"});
+    $scope.players.push({'name':"Tryck"});
+    $scope.players.push({'name':"Werk"});
+    $scope.players.push({'name':"Bokning"});
+    $scope.players.push({'name':"Nollegrupp"});
+    $scope.players.push({'name':"Mat"});
+    $scope.players.push({'name':"Webb"});
+  }
+  function populateCC(){
+    $scope.players = []
+    $scope.players.push({'name':"Chef"});
+    $scope.players.push({'name':"Spons"});
+    $scope.players.push({'name':"Dryck"});
+    $scope.players.push({'name':"Klipp und Klister"});
+    $scope.players.push({'name':"Biljett"});
+    $scope.players.push({'name':"PR"});
+    $scope.players.push({'name':"KassÃ¶r"});
+    $scope.players.push({'name':"Tryck"});
+    $scope.players.push({'name':"Klipp und Klister"});
+    $scope.players.push({'name':"Mat"});
+    $scope.players.push({'name':"Intendent"});
+    $scope.players.push({'name':"Personal"});
+  }
+  function populateDGROUP(){
+    $scope.players = []
+    $scope.players.push({'name':"Fluffet"});
+    $scope.players.push({'name':"Chief"});
+    $scope.players.push({'name':"Spokk"});
+    $scope.players.push({'name':"Ã–l & Bar"});
+    $scope.players.push({'name':"Event"});
+    $scope.players.push({'name':"Spons"});
+    $scope.players.push({'name':"J^8"});
+    $scope.players.push({'name':"KassÃ¶r"});
+    $scope.players.push({'name':"Tryck"});
+    $scope.players.push({'name':"Werk"});
+    $scope.players.push({'name':"Bokning"});
+    $scope.players.push({'name':"Mat"});
+    $scope.players.push({'name':"Webb"});
+  }
+  function populateLists(){
+    $scope.lists.push({'title':"Ta 5 klunkar", index: -1});
+    $scope.lists.push({'title':"Ge bort 5 klunkar", index: -1});
+    $scope.lists.push({'title':"Svep en Ã¶l", index: -1});
+  }
 });
