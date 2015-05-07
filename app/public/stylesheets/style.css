@@ -29,7 +29,7 @@ a{
   text-decoration:none;
   color:#fcfcfc;
 }
-  video#bgvid {
+video#bgvid {
   position: fixed; right: 0; bottom: 0;
   min-width: 100%; min-height: 100%;
   width: auto; height: auto;
@@ -90,7 +90,16 @@ a{
 #navigation > nav > ul > li.active{
   background-color:#222222;
 }
+#navigation > h3.lobby{
+  background: #1a1a1a;
+}
+#navigation > ul.players{
+  padding: 10px;
+}
+#navigation > ul.players:nth-child(even){
+  background-color: #404040;
 
+}
 .container{
   width:100%;
 }
@@ -176,8 +185,8 @@ a{
 .list > img.arrow{
   position:absolute;
   left:-20px;
--webkit-transition-property: top, bottom;
-        -webkit-transition-duration: 0.1s;
+  -webkit-transition-property: top, bottom;
+  -webkit-transition-duration: 0.1s;
 }
 .list > ul > li:nth-child(even){
   background:#222222;
@@ -247,7 +256,26 @@ a{
   margin-bottom: 50px;
 }
 .popup .set{
- margin-bottom: 50px;
+  margin-bottom: 50px;
+}
+.popup h3{
+  padding:10px 20px;
+  background: #1a1a1a;
+}
+.popup ul.lobby-list{
+  max-height:300px;
+  list-style:none;
+  margin-bottom:50px;
+  overflow-x: auto;
+  border:1px solid #404040;
+}
+.popup ul.lobby-list li{
+  padding:10px 5px;
+  background-color:#303030;
+  cursor: pointer;
+}
+.popup ul.lobby-list li:nth-child(even){
+  background-color:#202020;
 }
 button{
   margin:10px 0;
@@ -258,6 +286,10 @@ button{
 }
 button:hover{
   background-color:#B21000;
+}
+button[disabled=disabled], button:disabled {
+  background-color: #808080;
+  color: #909090;
 }
 .mail{
   font-weight: 300;

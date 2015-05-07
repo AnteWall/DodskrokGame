@@ -1,5 +1,4 @@
 var app = angular.module('dk', ['ngAudio']);
-var socket = io();
 
 app.controller('MenuCtrl',function($scope,$rootScope){
 
@@ -7,6 +6,13 @@ app.controller('MenuCtrl',function($scope,$rootScope){
     console.log(name);
     $rootScope.$broadcast('profile',name);
   }
+
+  $scope.$on('room',function(event,data){
+    console.log('got data',data)
+    $scope.room = data;
+    console.log($scope.room.name);
+    $scope.$apply();
+  });
 
 });
 
@@ -59,7 +65,9 @@ app.controller('ChangelogCtrl',function($scope,$rootScope){
 
 
 app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
-
+  $scope.io = {};
+  $scope.io.socket = io();
+  $scope.new_lobby = {};
   $scope.round = 0;
   $scope.playing = false;
   $scope.sound = ngAudio.load("sprit.mp3");
@@ -73,6 +81,46 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
   $scope.hideMenu = false;
   setup();
   clock();
+
+  /**
+  * Returns all rooms from server
+  */
+  $scope.io.socket.on('rooms',function(data){
+    console.log(data);
+    $scope.io.rooms = data.rooms;
+  });
+
+  /**
+  * When new room has been created
+  */
+  $scope.io.socket.on('room_created',function(data){
+    console.log('room_created',data);
+    if(data.success){
+      connect_to_room(data.room);
+    }
+  });
+
+  /**
+  * On room connection
+  */
+  $scope.io.socket.on('room_connection',function(data){
+    if(data.success){
+      connect_to_room(data.room);
+    }
+  });
+  $scope.io.socket.on('room_update',function(data){
+    console.log("ROM_UPDATE", data);
+    if(data.success){
+      connect_to_room(data.room);
+    }
+  });
+  function connect_to_room(room){
+    $scope.room = room;
+    $rootScope.blackout = false;
+    $scope.popup.show = false;
+    console.log("BROADCASTING!!");
+    $rootScope.$broadcast('room',room);
+  }
 
   $scope.startGame = function(){
     $scope.playing = true;
@@ -183,6 +231,30 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
     return {'top': pos+'px'};
   }
 
+  $scope.create_room = function(){
+    $scope.io.socket.emit('create_room',{ room: $scope.new_lobby });
+  }
+
+
+  $scope.room_creation_disabled = function(){
+    if($scope.new_lobby.lobby_name != undefined
+      && $scope.new_lobby.name != undefined ){
+      if($scope.new_lobby.lobby_name.length != 0
+        && $scope.new_lobby.name.length != 0){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  $scope.connect_to_room = function(room){
+    $scope.io.socket.emit('connect_to_room',
+    {
+      room: room.id,
+      user: $scope.new_lobby.name
+    });
+  }
+
   function rollList(list){
     if($scope.playing){
       $timeout(function(){
@@ -213,6 +285,10 @@ app.controller('DkCtrl',function($scope,$interval,$timeout,ngAudio,$rootScope){
     return Math.floor(Math.random()*(max-min+1)+min) * 1000;
   }
   function setup(){
+    $rootScope.blackout = true;
+    $scope.popup.show = true;
+    $scope.popup.type = 'lobby';
+    $scope.io.socket.emit('get_rooms');
     populateLists();
     populateSTABEN();
   }

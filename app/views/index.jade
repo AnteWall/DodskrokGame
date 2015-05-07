@@ -66,5 +66,25 @@ block content
               br
               br
               |           Vem klarar sig l&auml;ngst?! Finns bara ett s&auml;tt att f&aring; reda p&aring; det!
+        div(ng-show="popup.type == 'lobby'")
+          h2 Välj eller skapa Lobby
+          p.text
+            | Välj eller skapa en lobby för att starta ett spel.
+            br
+            label Användarnamn
+            input(type="text", ng-model="new_lobby.name")
+            label Lobby namn
+            input(type="text", ng-model="new_lobby.lobby_name")
+            button(ng-disabled="room_creation_disabled()" ng-click="create_room()") Skapa rum
+          h3 Lobbys
+          ul.lobby-list
+            li(ng-repeat="room in io.rooms" ng-click="connect_to_room(room)")
+              p {{room.name}}
+              p.players Players: {{room.users.length}}
+
+            li(ng-show="io.rooms.length == 0" )
+              p No active rooms
+
+
       .footer
         button(ng-click='closePopup()') Stäng
