@@ -1,4 +1,5 @@
 var app = angular.module('dk', ['ngAudio']);
+var socket = io();
 
 app.controller('MenuCtrl',function($scope,$rootScope){
 
