@@ -209,6 +209,7 @@ a{
   top:0;
   left:0;
   background: rgba(0,0,0,.5);
+  z-index: 500;
 }
 .popup{
   position:fixed;
@@ -219,7 +220,7 @@ a{
   right:0;
   min-height:250px;
   background:#333333;
-  z-index: 100;
+  z-index: 600;
 }
 .popup label{
   display:block;
