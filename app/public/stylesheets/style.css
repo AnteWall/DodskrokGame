@@ -96,7 +96,20 @@ video#bgvid {
 #navigation > ul.players{
   padding: 10px;
 }
-#navigation > ul.players:nth-child(even){
+#navigation > ul.players li p,
+#navigation > ul.players li img{
+  display:inline-block;
+  vertical-align:middle;
+}
+#navigation > ul.players li img{
+  width:24px;
+  float:right;
+}
+#navigation > ul.players li{
+  background-color: #1a1a1a;
+  padding:5px;
+}
+#navigation > ul.players li:nth-child(even){
   background-color: #404040;
 
 }
@@ -187,11 +200,29 @@ video#bgvid {
   left:-20px;
   -webkit-transition-property: top, bottom;
   -webkit-transition-duration: 0.1s;
+  z-index: 2000;
 }
 .list > ul > li:nth-child(even){
   background:#222222;
 }
+.list > ul > li{
+  text-align:center;
+  background:#2a2929;
+  font-weight:300;
+  height:50px;
+  line-height:50px;
+}
 .list > ul > li.active{
+  -webkit-transition: 1s ease-in-out;
+  -moz-transition: 1s ease-in-out;
+  -o-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.2); /* Safari */
+  transform: scale(1.2);
+  margin: 10px 0;
+  border: 1px solid black;
+  z-in
 }
 .list > .add-player{
   background: #1a1a1a;
@@ -325,4 +356,30 @@ button[disabled=disabled], button:disabled {
 #changelogs h2{
   background: #1a1a1a;
   padding: 5px 10px;
+}
+
+.animate-enter,
+.animate-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.420, 0.000, 0.580, 1.000) all;
+    -moz-transition: 400ms cubic-bezier(0.420, 0.000, 0.580, 1.000) all;
+    -ms-transition: 400ms cubic-bezier(0.420, 0.000, 0.580, 1.000) all;
+    -o-transition: 400ms cubic-bezier(0.420, 0.000, 0.580, 1.000) all;
+    transition: 400ms cubic-bezier(0.420, 0.000, 0.580, 1.000) all;
+    position: relative;
+    display: block;
+}
+
+.animate-enter.animate-enter-active,
+.animate-leave {
+    opacity: 1;
+    top: 0;
+    height: 30px;
+}
+
+.animate-leave.animate-leave-active,
+.animate-enter {
+    opacity: 0;
+    top: -50px;
+    height: 0px;
 }

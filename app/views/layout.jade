@@ -8,6 +8,7 @@ head
   link(rel='stylesheet', href='bower_components/flexboxgrid/dist/flexboxgrid.min.css')
   link(rel='stylesheet', href='stylesheets/style.css')
   script(src='bower_components/angular/angular.js')
+  script(src="bower_components/angular-animate/angular-animate.min.js")
   script(type='text/javascript', src='javascripts/angular.audio.js')
   script(src='javascripts/socket.io.js')
   script(src='javascripts/dkgame.js')
@@ -37,6 +38,7 @@ body(ng-app='dk')
     ul.players
       li(ng-repeat="player in room.users")
         p {{player.name}}
+        img(ng-show="player.host", src="images/icons/crown.png")
     p.mail
       | Vill du ha en profil inlagd?
       br

@@ -3,7 +3,7 @@ extends layout
 block content
   .container(ng-controller='DkCtrl')
     .top-bar
-      button(ng-click='startGame()') Start Game
+      button(ng-show="isHost()" ng-click='startGame()') Start Game
       p.rounds Spelade rundor: {{round}}
       p.next(ng-show='round > 0 && playing == false') N&auml;sta runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder
       .buttons
@@ -33,9 +33,9 @@ block content
         .set(ng-show="popup.type == 'settings'")
           h2 Inst&auml;llningar
           p Minsta tiden till n&auml;sta runda (minuter):
-          input(type='number', ng-model='startMin')
+          input(type='number', ng-model='settings.startMin')
           p H&ouml;gsta tiden till n&auml;sta runda (minuter):
-          input(type='number', ng-model='startMax')
+          input(type='number', ng-model='settings.startMax')
           label Nytt uppdrag
           input(type='text', ng-model='listitem')
           button(ng-click='newListItem()') L&auml;gg till
@@ -77,11 +77,11 @@ block content
             input(type="text", ng-model="new_lobby.lobby_name")
             button(ng-disabled="room_creation_disabled()" ng-click="create_room()") Skapa rum
           h3 Lobbys
-          ul.lobby-list
-            li(ng-repeat="room in io.rooms" ng-click="connect_to_room(room)")
+          ul.lobby-list(ng-show="new_lobby.name")
+            li(ng-animate="'animate'" ng-repeat="room in io.rooms" ng-click="connect_to_room(room)")
               p {{room.name}}
               p.players Players: {{room.users.length}}
-
+              p.started(ng-show="room.started") Aktiv
             li(ng-show="io.rooms.length == 0" )
               p No active rooms
 
