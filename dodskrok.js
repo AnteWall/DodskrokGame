@@ -12,7 +12,7 @@ app.use(sassMiddleware({
     outputStyle: 'compressed',
     prefix: '/prefix'
 }));
-
+app.set('views', __dirname+'/views');
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json()) // parse application/json
 
-var server = app.listen(3000, function() {
+var server = app.listen(20771, function() {
     var host = server.address().address;
     var port = server.address().port;
     console.log('Example app listening at http://%s:%s', host, port);
