@@ -1,0 +1,17 @@
+{
+  "name": "dodskrok",
+  "version": "4.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-audio": "~1.7.1",
+    "angular-material": "~0.11.1",
+    "normalize-scss": "~3.0.3",
+    "typicons": "~2.0.7"
+  },
+  "devDependencies": {}
+}

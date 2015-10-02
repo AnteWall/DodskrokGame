@@ -1,0 +1,22 @@
+<div class="LobbyListItem">
+    <div class="MiniInfo" ng-click="toggleExpanded()">
+        <p>{{ item.name }}</p>
+        <p class="PlayerCount">Players: {{ item.playerList.length }}</p>
+        <div class="typcn typcn-camera" ng-if="item.webcam"></div>
+    </div>
+    <div class="Information" ng-if="expanded">
+        <div class="Left">
+            <label>Lobby name:</label>
+            <div class="LobbyName"> {{ item.name }}</div>
+            <br>
+            <label class="players">Players: </label>
+            <div class="PlayersCount">{{item.playerList.length}}</div>
+            <br>
+            <label>Lobby Status:</label>
+            <div class="LobbyStatus">{{ item.status }}</div>
+        </div>
+        <div class="Right">
+            <a ng-href="{{'/lobby/' + item.id}}" class="JoinLobby">Join Lobby</a>
+        </div>
+    </div>
+</div>

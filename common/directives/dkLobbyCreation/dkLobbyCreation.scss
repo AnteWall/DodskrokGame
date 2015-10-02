@@ -1,0 +1,87 @@
+.LobbyCreation {
+    .Top {
+        display: flex;
+        label {
+            display: block;
+            color: white;
+            padding: 4px 0;
+        }
+        .Fields {
+            flex: 1;
+            padding: 0 20px;
+            input {
+                display: block;
+                width: 100%;
+                padding: 6px 8px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                &.NewPlayer {
+                    width: 88%;
+                    display: inline-block;
+                }
+            }
+            ul.PlayerList {
+                display: block;
+                border: 1px solid rgba(0, 0, 0, .5);
+                list-style: none;
+                color: rgba(255, 255, 255, .8);
+                li {
+                    background-color: rgba(0, 0, 0, .2);
+                    padding: 5px 10px;
+                    p {
+                        display: inline-block;
+                    }
+                    .typcn {
+                        display: inline-block;
+                        float: right;
+                        cursor: pointer;
+                    }
+                    &:nth-child(odd) {
+                        background-color: rgba(0, 0, 0, .4);
+                    }
+                }
+            }
+            button {
+                margin: 5px 0;
+                display: inline-block;
+                width: 10%;
+                height: 26px;
+                background-color: $dkRed;
+                color: white;
+                cursor: pointer;
+            }
+        }
+        .Settings {
+            flex: 1;
+            padding: 0 10px;
+            select {
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                width: 100%;
+                padding: 6px 8px;
+            }
+            .Time {
+                display: flex;
+                margin: 0 0 10px 0;
+                .Column {
+                    flex: 1;
+                    text-align: center;
+                    input {
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        padding: 6px 8px;
+                        display: inline-block;
+                        width: 90%;
+                    }
+                }
+            }
+        }
+    }
+    .Create {
+        width: 100%;
+        background-color: $dkRed;
+        color: white;
+        margin-top: 20px;
+        padding: 8px;
+    }
+}

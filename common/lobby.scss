@@ -1,0 +1,83 @@
+#lobby {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    background-image: url(/img/lobby/background_2.png);
+    background-size: cover;
+    .Logo {
+        width: 800px;
+        margin: 60px auto;
+        text-align: center;
+        color: white;
+        h2 {
+            font-size: 40px;
+        }
+        p {
+            font-size: 20px;
+        }
+    }
+    .LobbyMenu {
+        background-color: #1d1f27;
+        width: 750px;
+        margin: 60px auto 0 auto;
+        -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.75);
+        .Header {
+            background-color: #e23827;
+            color: white;
+            text-align: center;
+            padding: 8px 0;
+            position: relative;
+            .Backward {
+                top: 3px;
+                left: 8px;
+                font-size: 20px;
+                position: absolute;
+            }
+        }
+        .LobbyContent {
+            padding: 16px;
+            .Buttons {
+                display: flex;
+                .BigButton {
+                    margin: 40px 40px 20px 40px;
+                    flex: 1;
+                    height: 200px;
+                    background-color: #ff3366;
+                    color: white;
+                    text-align: center;
+                    line-height: 200px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    font-size: 18px;
+                    transition-duration: 0s;
+                    &:hover,
+                    &:focus {
+                        transition-duration: 0s;
+                        background-color: #fe0044;
+                    }
+                }
+            }
+            .Help {
+                text-align: center;
+                a {
+                    display: inline-block;
+                    margin-top: 4px;
+                }
+                .typcn {
+                    border: 2px solid white;
+                    padding: 0;
+                    margin: 0;
+                    border-radius: 100%;
+                    font-size: 14px;
+                    line-height: 19px;
+                    width: 20px;
+                    height: 20px;
+                    color: white;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

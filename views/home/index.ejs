@@ -1,0 +1,29 @@
+<% include ../partials/head %>
+    <div id="lobby" ng-controller="LobbyController">
+        <div class="Logo">
+            <h2>Dödskrök.se</h2>
+            <p>Presented by <span class="STABEN">Staben</span></p>
+        </div>
+        <div class="LobbyMenu">
+            <div class="Header">
+                <div class="typcn typcn-arrow-back Backward" ng-show="isNotPage('Menu')" ng-click="selectPage('Menu')"></div>
+                Lobby Menu</div>
+            <div class="LobbyContent">
+                <div ng-if="isPage('Menu')" class="Buttons">
+                    <button class="BigButton" ng-click="selectPage('NewLobby')">
+                        Create a lobby
+                    </button>
+                    <button class="BigButton" ng-click="selectPage('JoinLobby')">
+                        Join a lobby
+                    </button>
+                </div>
+                <div ng-if="isPage('Menu')" class="Help">
+                    <div class="typcn typcn-info-large-outline"></div>
+                    <a href="/help">What is this?</a>
+                </div>
+                <dk-lobby-creation ng-show="isPage('NewLobby')"></dk-lobby-creation>
+                <dk-lobby-join ng-show="isPage('JoinLobby')"></dk-lobby-join>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/footer %>

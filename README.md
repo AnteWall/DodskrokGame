@@ -1,2 +1,0 @@
-# DodskrokGame
-www.dödskrök.se

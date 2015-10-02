@@ -1,0 +1,8 @@
+<div class="Carousel" ng-style="marginOffset()">
+    <div class="Title">{{ mission.name }}</div>
+    <div class="CarouselContainer">
+        <div class="CarouselWheel" ng-style="wheelStyle()">
+            <figure ng-repeat="i in list" ng-style="figureStyle($index)">{{i.name}}</figure>
+        </div>
+    </div>
+</div>

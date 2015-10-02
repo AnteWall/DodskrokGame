@@ -1,0 +1,36 @@
+<div class="LobbyCreation">
+    <div class="Top">
+        <div class="Fields">
+            <label>Lobby name</label>
+            <input type="text" placeholder="Coolest lobby name ever" />
+            <label>Player List</label>
+            <input class="NewPlayer" type="text" placeholder="New playername..." ng-model="model.newPlayer" />
+            <button ng-click="addPlayer()">
+                <div class="typcn typcn-plus">
+            </button>
+            <ul class="PlayerList">
+                <li ng-repeat="player in players track by $index">
+                    <p>{{ player }}</p>
+                    <div ng-click="removePlayer(player)" class="typcn typcn-minus"></div>
+                </li>
+            </ul>
+            </div>
+            <div class="Settings">
+                <label>Saved templates</label>
+                <select class="PresetList">
+                    <option>Test option</option>
+                </select>
+                <div class="Time">
+                    <div class="Column">
+                        <label>Min time (minutes)</label>
+                        <input type="number" value="1" />
+                    </div>
+                    <div class="Column">
+                        <label>Max time (minutes)</label>
+                        <input type="number" value="3" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="Create">Create</button>
+    </div>

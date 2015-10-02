@@ -1,0 +1,12 @@
+<% include ../partials/head %>
+    <div id="Game" ng-controller="GameController">
+        <div class="Header">
+            <p class="Lobby">{{ lobby.name }}</p>
+            <button ng-if="!started" ng-click="startGame()">Start game</button>
+        </div>
+        <dk-game-settings data-max-time="maxTime" data-min-time="minTime" players="players" missions='missions'></dk-game-settings>
+        <div class="Spinners">
+            <dk-carousel-wheel ng-repeat="mission in missions" data-mission="mission" data-x-translate="getXTranslateForWheel($index)" data-index="$index" data-players="players" data-spin="mission.spin" data-stop-index="mission.stopIndex"></dk-carousel-wheel>
+        </div>
+    </div>
+    <% include ../partials/footer %>

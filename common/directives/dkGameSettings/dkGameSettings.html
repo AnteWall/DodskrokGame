@@ -1,0 +1,35 @@
+<div class="GameSettings">
+    <div class="SettingsButton" ng-click="toggleSettings()">
+        <div class="typcn typcn-spanner"></div>
+    </div>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-toolbar>
+            <h1 class="md-toolbar-tools">Settings</h1>
+        </md-toolbar>
+        <label>Players</label>
+        <md-chips class="md-padding" ng-model="players" readonly="false" placeholder="New player" secondary-placeholder="New player" md-on-append="addPlayer($chip)">
+            <md-chip-template class="md-primary">
+                <span>
+                    <strong>{{$chip.name}}</strong>
+                </span>
+            </md-chip-template>
+        </md-chips>
+        <label>Missions</label>
+        <md-chips class="md-padding" ng-model="missions" readonly="false" placeholder="New mission" secondary-placeholder="New mission" md-on-append="addMission($chip)">
+            <md-chip-template>
+                <span>
+                    <strong>{{$chip.name}}</strong>
+                </span>
+            </md-chip-template>
+        </md-chips>
+        <label>Max time (minutes)</label>
+        <md-slider flex md-discrete ng-model="maxTime" step="1" min="1" max="30" aria-label="rating">
+        </md-slider>
+        <label>Min time (minutes)</label>
+        <md-slider flex md-discrete ng-model="minTime" step="1" min="1" max="30" aria-label="rating">
+        </md-slider>
+        <md-button ng-click="toggleSettings()" class="md-primary">
+            Close
+        </md-button>
+    </md-sidenav>
+</div>

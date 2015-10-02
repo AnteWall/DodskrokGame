@@ -1,0 +1,56 @@
+$dkRed: #e23827;
+$dkDark: #1d1f27;
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
+md-input-container .md-input,
+input {
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    color: white;
+}
+
+md-chips .md-chips {
+    box-shadow: 0 1px rgba(255, 255, 255, .2);
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    font-family: 'Roboto Light';
+    background-color: $dkDark!important;
+}
+
+@font-face {
+    font-family: 'typicons';
+    src: url("/bower_components/typicons/src/font/typicons.eot");
+    src: url("/bower_components/typicons/src/font/typicons.eot?#iefix") format('embedded-opentype'), url("/bower_components/typicons/src/font/typicons.woff") format('woff'), url("/bower_components/typicons/src/font/typicons.ttf") format('truetype'), url("/bower_components/typicons/src/font/typicons.svg#typicons") format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Rockey;
+    src: url(../fonts/ROCKYAOE.ttf);
+}
+
+a {
+    color: #d82845;
+    text-decoration: none;
+}
+
+.STABEN {
+    font-family: 'Rockey';
+    color: #e23827;
+    text-transform: uppercase;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, .7), 1px -1px 0 rgba(0, 0, 0, .7), -1px 1px 0 rgba(0, 0, 0, .7), 1px 1px 0 rgba(0, 0, 0, .7);
+}
