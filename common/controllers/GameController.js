@@ -125,7 +125,9 @@ angular.module('dodskrok.controllers')
 
             function startNextRoundTimer() {
                 var time = calculateNextRoundTime();
+                //var time = ($scope.audio.duration * 1000) + 5000; //DEBUG
                 $timeout(function() {
+                    $scope.roundActive = false;
                     startRound();
                 }, time);
             }

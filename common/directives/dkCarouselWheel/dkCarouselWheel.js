@@ -85,7 +85,7 @@ angular.module('dodskrok.directives')
                 });
 
                 scope.$watch('stopIndex', function(value) {
-                    if (value !== null || value !== undefined) {
+                    if (!!value) {
                         $interval.cancel(scope.spinPromise);
                         scope.rotation = getRotationFromIndex(value);
                     }
