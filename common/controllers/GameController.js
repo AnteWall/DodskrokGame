@@ -43,18 +43,19 @@ angular.module('dodskrok.controllers')
             }];
 
             $scope.missions = [{
-                name: 'Ta 5 klunkar',
-                spin: false,
-                stopIndex: null
-            }, {
-                name: 'Ge 5 klunkar',
-                spin: false,
-                stopIndex: null
-            }, {
-                name: 'Ta 1 Shot',
-                spin: false,
-                stopIndex: null
-            }, {
+                    name: 'Ta 5 klunkar',
+                    spin: false,
+                    stopIndex: null
+                }, {
+                    name: 'Ge 5 klunkar',
+                    spin: false,
+                    stopIndex: null
+                }, {
+                    name: 'Ta 1 Shot',
+                    spin: false,
+                    stopIndex: null
+                }
+                /*, {
                 name: 'Ta av 1 klädesplagg',
                 spin: false,
                 stopIndex: null
@@ -62,7 +63,8 @@ angular.module('dodskrok.controllers')
                 name: 'Spring 1 varv runt huset',
                 spin: false,
                 stopIndex: null
-            }];
+            }*/
+            ];
 
             $scope.getXTranslateForWheel = function(index) {
                 return 0;

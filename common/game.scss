@@ -35,5 +35,9 @@
         margin: auto;
         width: 960px;
         height: calc(100% - 62px);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 }

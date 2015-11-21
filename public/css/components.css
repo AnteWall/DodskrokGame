@@ -143,10 +143,14 @@ a {
     background-color: rgba(0, 0, 0, 0.2);
     margin: auto;
     width: 960px;
-    height: calc(100% - 62px); }
+    height: calc(100% - 62px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap; }
 
 .Carousel {
-  display: inline-block;
+  flex: 1;
   transition-duration: 1s; }
   .Carousel .Title {
     margin-top: 10px;
