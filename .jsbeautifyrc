@@ -1,5 +1,0 @@
-{
-    "html": {
-        "allowed_file_extensions": ["html", "shtml", "aspx", "master", "xml", "xhtml", "ejs"]
-    }
-}
