@@ -66,6 +66,8 @@ app.get('/profiles/:query', function(req, res) {
     var query = req.params.query;
     Profile.find({
         name: new RegExp(query, 'i')
+    }, {
+        password: 0
     }, function(err, doc) {
         res.json(doc);
     });
@@ -79,26 +81,45 @@ app.post('/profiles/save', function(req, res) {
     var profileLists = req.body.lists;
 
     Profile.findOne({
-        name: profileName
-    }, function(err, profile) {
-        if (err) {
-            res.json({
-                error: 'Error loading from db, try again later'
-            });
-        }
-        if (profile) {
-            if (profile.password !== profilePass) {
+            name: profileName
+        },
+        function(err, profile) {
+            if (err) {
                 res.json({
-                    'error': 'Profilnamnet är upptaget eller så har du skrivit in fel lösenord, försök igen'
+                    error: 'Error loading from db, try again later'
                 });
+            }
+            if (profile) {
+                if (profile.password !== profilePass) {
+                    res.json({
+                        'error': 'Profilnamnet är upptaget eller så har du skrivit in fel lösenord, försök igen'
+                    });
+                } else {
+                    profile.update({
+                        players: profilePlayers,
+                        lists: profileLists
+                    }, function(err, p) {
+                        if (err) {
+                            res.json({
+                                'error': 'Fel när vi försökte uppdatera din profil'
+                            });
+                        } else {
+                            res.json({
+                                'success': 'ok'
+                            });
+                        }
+                    });
+                }
             } else {
-                profile.update({
+                Profile.create({
+                    name: profileName,
+                    password: profilePass,
                     players: profilePlayers,
                     lists: profileLists
-                }, function(err, p) {
+                }, function(err, newProfile) {
                     if (err) {
                         res.json({
-                            'error': 'Fel när vi försökte uppdatera din profil'
+                            'error': 'Fel när vi försökte skapa profilen, försök igen senare'
                         });
                     } else {
                         res.json({
@@ -107,25 +128,7 @@ app.post('/profiles/save', function(req, res) {
                     }
                 });
             }
-        } else {
-            Profile.create({
-                name: profileName,
-                password: profilePass,
-                players: profilePlayers,
-                lists: profileLists
-            }, function(err, newProfile) {
-                if (err) {
-                    res.json({
-                        'error': 'Fel när vi försökte skapa profilen, försök igen senare'
-                    });
-                } else {
-                    res.json({
-                        'success': 'ok'
-                    });
-                }
-            });
-        }
-    });
+        });
 });
 
 app.listen(3000, function() {

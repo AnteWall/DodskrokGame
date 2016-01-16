@@ -122,7 +122,6 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
         };
         console.log('SAVING', data);
         $http.post('profiles/save', data).success(function(res) {
-            console.log(res);
             if (res.error) {
                 $scope.savingError = res.error;
             } else {
@@ -262,6 +261,10 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
     }
 
     $scope.$on('load-profile', function(event, profile) {
+        $scope.playing = false;
+        $scope.round = 0;
+        $scope.sound.stop();
+
         $scope.players = [];
         $scope.lists = [];
         $scope.players = profile.players;

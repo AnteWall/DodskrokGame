@@ -49,7 +49,7 @@
     <div class="container" ng-controller="DkCtrl">
         <div class="top-bar">
             <div class="left-info">
-                <button ng-click="startGame()">Start Game</button>
+                <button ng-show="!playing" ng-click="startGame()">Start Game</button>
                 <p class="rounds">Spelade rundor: {{round}}</p>
                 <p ng-show="round > 0 && playing == false" class="next">Nästa runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder</p>
             </div>
