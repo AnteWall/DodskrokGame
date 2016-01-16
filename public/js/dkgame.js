@@ -120,7 +120,7 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
             players: $scope.players,
             lists: $scope.lists
         };
-        console.log('SAVING', data);
+
         $http.post('profiles/save', data).success(function(res) {
             if (res.error) {
                 $scope.savingError = res.error;
