@@ -1,5 +1,7 @@
 angular.module('dodskrok.directives')
-    .directive('dkLobbyCreation', function($interval) {
+    .directive('dkLobbyCreation', function($interval, $http) {
+        var CREATION_URL = '/lobby/create';
+
         return {
             restrict: 'E',
             templateUrl: '/common/directives/dkLobbyCreation/dkLobbyCreation.html',
@@ -9,7 +11,7 @@ angular.module('dodskrok.directives')
             link: function(scope, element, attr) {
                 scope.model = {
                     newPlayer: '',
-                    lobbyName: ''
+                    lobbyName: 'test'
                 };
                 scope.players = ['Player1', 'Player2', 'Player3'];
 
@@ -22,6 +24,20 @@ angular.module('dodskrok.directives')
 
                 scope.removePlayer = function(player) {
                     scope.players.splice(scope.players.indexOf(player), 1);
+                };
+
+                scope.createLobby = function() {
+                    var data = {
+                        'name': scope.model.lobbyName,
+                        'players': scope.players
+                    }
+
+                    $http.post(CREATION_URL, data).success(function(result) {
+                        console.log(result);
+                    }).error(function(err) {
+                        console.error('ERROR CREATION LOBBY');
+                        console.error(err);
+                    });
                 };
             }
         };

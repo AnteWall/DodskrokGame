@@ -206,6 +206,7 @@ a {
     flex: 1;
     padding: 0 20px; }
     .LobbyCreation .Top .Fields input {
+      color: black;
       display: block;
       width: 100%;
       padding: 6px 8px;

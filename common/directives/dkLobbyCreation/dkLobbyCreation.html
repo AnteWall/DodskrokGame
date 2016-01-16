@@ -2,7 +2,7 @@
     <div class="Top">
         <div class="Fields">
             <label>Lobby name</label>
-            <input type="text" placeholder="Coolest lobby name ever" />
+            <input type="text" ng-model="model.lobbyName" placeholder="Coolest lobby name ever" />
             <label>Player List</label>
             <input class="NewPlayer" type="text" placeholder="New playername..." ng-model="model.newPlayer" />
             <button ng-click="addPlayer()">
@@ -32,5 +32,5 @@
                 </div>
             </div>
         </div>
-        <button class="Create">Create</button>
+        <button ng-click="createLobby()" class="Create">Create</button>
     </div>
