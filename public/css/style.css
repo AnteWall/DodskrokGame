@@ -108,6 +108,7 @@ a {
 }
 
 .container {
+    height: 100%;
     width: 100%;
 }
 
@@ -368,6 +369,8 @@ button:hover {
 }
 
 .row {
+    overflow: auto;
+    height: calc(100% - 60px);
     display: flex;
 }
 

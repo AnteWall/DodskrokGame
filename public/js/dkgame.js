@@ -7,7 +7,7 @@ app.controller('MenuCtrl', function($scope, $rootScope, $http) {
     $scope.$watch('model.search', function(query) {
         if (query) {
             $scope.isLoading = true;
-            $http.get('/profiles/' + query).success(function(result) {
+            $http.get('/profiles/search/' + query).success(function(result) {
                 $scope.loadedProfiles = result;
             }).error(function(err) {
                 console.log(err);
@@ -72,7 +72,8 @@ app.controller('ChangelogCtrl', function($scope, $rootScope) {
 
 
 app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $rootScope) {
-
+    var chromecastAdmin = null;
+    $scope.chromecastMode = true;
     $scope.round = 0;
     $scope.playing = false;
     $scope.sound = ngAudio.load("dkSprit.wav");
@@ -155,11 +156,11 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
         return time;
     };
 
-    $scope.removePlayer = function(player) {
-        $scope.players.splice([$scope.players.indexOf(player)], 1);
+    $scope.removePlayer = function(playerIndex) {
+        $scope.players.splice(playerIndex, 1);
     };
-    $scope.removeList = function(list) {
-        $scope.lists.splice([$scope.lists.indexOf(list)], 1);
+    $scope.removeList = function(listIndex) {
+        $scope.lists.splice(listIndex, 1);
     };
 
     $scope.addPlayerBox = function() {
@@ -332,89 +333,6 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
         });
     }
 
-    function populateCC() {
-        $scope.players = [];
-        $scope.players.push({
-            'name': "Chef"
-        });
-        $scope.players.push({
-            'name': "Spons"
-        });
-        $scope.players.push({
-            'name': "Dryck"
-        });
-        $scope.players.push({
-            'name': "Klipp und Klister"
-        });
-        $scope.players.push({
-            'name': "Biljett"
-        });
-        $scope.players.push({
-            'name': "PR"
-        });
-        $scope.players.push({
-            'name': "Kassör"
-        });
-        $scope.players.push({
-            'name': "Tryck"
-        });
-        $scope.players.push({
-            'name': "Klipp und Klister"
-        });
-        $scope.players.push({
-            'name': "Mat"
-        });
-        $scope.players.push({
-            'name': "Intendent"
-        });
-        $scope.players.push({
-            'name': "Personal"
-        });
-    }
-
-    function populateDGROUP() {
-        $scope.players = [];
-        $scope.players.push({
-            'name': "Fluffet"
-        });
-        $scope.players.push({
-            'name': "Chief"
-        });
-        $scope.players.push({
-            'name': "Spokk"
-        });
-        $scope.players.push({
-            'name': "Öl & Bar"
-        });
-        $scope.players.push({
-            'name': "Event"
-        });
-        $scope.players.push({
-            'name': "Spons"
-        });
-        $scope.players.push({
-            'name': "J^8"
-        });
-        $scope.players.push({
-            'name': "Kassör"
-        });
-        $scope.players.push({
-            'name': "Tryck"
-        });
-        $scope.players.push({
-            'name': "Werk"
-        });
-        $scope.players.push({
-            'name': "Bokning"
-        });
-        $scope.players.push({
-            'name': "Mat"
-        });
-        $scope.players.push({
-            'name': "Webb"
-        });
-    }
-
     function populateLists() {
         $scope.lists.push({
             'title': "Ta 5 klunkar",
@@ -428,5 +346,88 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
             'title': "Svep en öl",
             index: -1
         });
+    }
+
+    var setupChromecast = function() {
+        castReceiverManager.onSenderDisconnected = function(event) {
+            if (window.castReceiverManager.getSenders().length === 0 && event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER) {
+                console.log("0 senders left, shutting down");
+                window.close();
+            }
+        };
+        castReceiverManager.onSenderConnected = function(event) {
+            if (window.castReceiverManager.getSenders().length < 2) {
+                chromecastAdmin = event.data;
+                messageBus.send(event.data, "initialize");
+            } else {
+                messageBus.send(event.data, "not_admin");
+            }
+        };
+
+        messageBus.onMessage = function(event) {
+            var data = event.data;
+            messageBus.send(event.senderId, event.data);
+
+            // Ignore messages from other users than admin
+            if (event.senderId != chromecastAdmin) {
+                messageBus.send(event.senderId, "not_admin");
+                return;
+            }
+
+            if (data.add_mission) {
+                addMission(data.add_mission);
+                castReceiverManager.setApplicationState("Mission " + name + " added");
+                $scope.listitem = name;
+                $scope.newListItem();
+            }
+
+            if (data.remove_mission) {
+                castReceiverManager.setApplicationState("Mission removed");
+                $scope.removeList(data.remove_mission);
+            }
+
+            if (data.add_player) {
+                castReceiverManager.setApplicationState("Player " + name + " added");
+                scope.playername = name;
+                scope.newPlayer();
+            }
+
+            if (data.remove_player) {
+                castReceiverManager.setApplicationState("Player removed");
+                $scope.removePlayer(data.remove_player);
+            }
+
+            if (data.time_min) {
+                scope.startMin = parseInt(data.time_min, 10);
+            }
+
+            if (data.time_max) {
+                scope.startMin = parseInt(data.time_max, 10);
+            }
+
+            if (data.action == "play") {
+                castReceiverManager.setApplicationState("Playing");
+
+                $scope.startGame();
+            }
+
+            if (data.action == "pause") {
+                //TODO pauseGame();
+            }
+
+            if (data.action == "initialize") {
+                $scope.chromecastMode = true;
+                $rootScope.hideMenu = true;
+            }
+        };
+
+        castReceiverManager.start();
+    };
+
+    if (window.location.protocol === "https:") {
+        var namespace = 'urn:x-cast:com.jacobandersson.dodskrok';
+        var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+        var messageBus = castReceiverManager.getCastMessageBus(namespace, 'JSON');
+        setupChromecast();
     }
 });
