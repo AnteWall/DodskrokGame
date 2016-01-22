@@ -73,7 +73,7 @@ app.controller('ChangelogCtrl', function($scope, $rootScope) {
 
 app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $rootScope) {
     var chromecastAdmin = null;
-    $scope.chromecastMode = true;
+    $scope.chromecastMode = false;
     $scope.round = 0;
     $scope.playing = false;
     $scope.sound = ngAudio.load("dkSprit.wav");
