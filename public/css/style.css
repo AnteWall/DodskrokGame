@@ -33,7 +33,7 @@ input:focus {
 
 a {
     text-decoration: none;
-    color: #fcfcfc;
+    color: #e23827;
 }
 
 .staben {
@@ -42,6 +42,7 @@ a {
 }
 
 #navigation {
+    position: relative;
     float: left;
     width: 275px;
     height: 100%;
@@ -105,6 +106,21 @@ a {
 
 #navigation > nav > ul > li.active {
     background-color: #222222;
+}
+
+#navigation .apps img {
+    width: 100px;
+    margin: 10px 0;
+}
+
+#navigation .apps p {
+    padding: 0 20px;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+#navigation .apps p.small {
+    font-weight: 300;
 }
 
 .container {
@@ -332,6 +348,10 @@ button:hover {
     font-weight: 300;
     margin: 20px 0;
     font-size: 10pt;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
 }
 
 .version {
