@@ -7,8 +7,8 @@ var app = express();
 
 //CHANGE VARS
 
-var mongoosePass = process.env.MONGOPASS || "pass";
-var mongooseName = process.env.MONGODB || "name";
+var mongoosePass = process.env.MONGOPASS || "stabenserdigalltid";
+var mongooseName = process.env.MONGODB || "dk";
 var defaultPORT = 3000;
 
 /**
@@ -53,7 +53,6 @@ var profileSchema = new Schema({
 });
 var Profile = mongoose.model('Profile', profileSchema);
 
-
 app.get('/', function(req, res) {
     res.render('index');
 });
@@ -62,7 +61,10 @@ app.get('/changelog', function(req, res) {
     res.render('changelog');
 });
 
-app.get('/profiles/:query', function(req, res) {
+app.get('/profiles/search/:query', function(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     var query = req.params.query;
     Profile.find({
         name: new RegExp(query, 'i')
@@ -75,6 +77,9 @@ app.get('/profiles/:query', function(req, res) {
 });
 
 app.post('/profiles/save', function(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     var profileName = req.body.name;
     var profilePass = req.body.password;
     var profilePlayers = req.body.players;
