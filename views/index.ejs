@@ -55,9 +55,9 @@
     <div class="container" ng-controller="DkCtrl">
         <div class="top-bar">
             <div class="left-info">
-                <button ng-show="!playing && !chromeCastMode" ng-click="startGame()">Start Game</button>
+                <button ng-show="!playing && !chromecastMode && round === 0" ng-click="startGame()">Start Game</button>
                 <p class="rounds">Spelade rundor: {{round}}</p>
-                <p ng-show="round > 0 && playing == false" class="next">Nästa runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder</p>
+                <p ng-show="round > 0 && !playing" class="next">Nästa runda inom: {{getMinTimeLeft()}} ~ {{getMaxTimeLeft()}} sekunder</p>
             </div>
             <h2 ng-class="{'extra-padding' : !$root.hideMenu }"><span class="staben">STABEN</span> ser dig alltid</h2>
             <div class="right-info">
@@ -73,15 +73,15 @@
                 <img ng-hide="list.index == -1" class="arrow" ng-style="arrowPosition(list)" src="img/arrow.png" />
                 <h4> 
                     {{list.title}}
-                    <span ng-if="!chromecastMode" ng-click="removeList($index)" class="typcn typcn-delete"></span>
+                    <span ng-hide="playing || chromecastMode" ng-click="removeList($index)" class="typcn typcn-delete"></span>
                 </h4>
                 <ul>
                     <li ng-class="selected($index,$parent.$index)" ng-repeat="player in players track by $index">
                         {{player.name}}
-                        <span ng-if="!chromecastMode" ng-click="removePlayer($index)" class="typcn typcn-delete"></span>
+                        <span ng-hide="playing || chromecastMode" ng-click="removePlayer($index)" class="typcn typcn-delete"></span>
                     </li>
                 </ul>
-                <div ng-if="!chromecastMode" ng-click="addPlayerBox()" class="add-player">
+                <div ng-hide="player || chromecastMode" ng-click="addPlayerBox()" class="add-player">
                     <p>Ny spelare</p>
                     <span class="typcn typcn-plus"></span>
                 </div>

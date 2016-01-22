@@ -203,6 +203,7 @@ a {
     max-height: 60px;
     height: 60px;
     line-height: 60px;
+    border-bottom: 1px solid rgba(70, 70, 70, 0.5);
 }
 
 .list > h4 > span {
@@ -248,7 +249,7 @@ a {
     position: absolute;
     left: -20px;
     -webkit-transition-property: top, bottom;
-    -webkit-transition-duration: 0.1s;
+    -webkit-transition-duration: 0.06s;
 }
 
 .list > ul > li:nth-child(even) {
@@ -327,6 +328,7 @@ a {
 
 .popup p.text {
     margin-bottom: 50px;
+    font-weight: 300;
 }
 
 .popup .set {
@@ -338,6 +340,7 @@ button {
     display: block;
     padding: 5px 15px;
     background-color: #e23827;
+    border-radius: 5px;
 }
 
 button:hover {

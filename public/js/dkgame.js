@@ -72,6 +72,7 @@ app.controller('ChangelogCtrl', function($scope, $rootScope) {
 
 
 app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $rootScope) {
+    var AUDIO_LENGTH = 21000;
     var chromecastAdmin = null;
     $scope.chromecastMode = false;
     $scope.round = 0;
@@ -93,9 +94,14 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
         $scope.playing = true;
         $scope.sound.play();
 
+        var stopPlayers = [];
         angular.forEach($scope.lists, function(list) {
             list.index = Math.floor(Math.random() * $scope.players.length);
-            rollList(list);
+            var stopIndex = getStopPlayerIndex(stopPlayers);
+            stopPlayers.push(stopIndex);
+            list.index = stopIndex;
+            var timeoutTimePerJump = AUDIO_LENGTH / (Math.round(AUDIO_LENGTH / (randomTime(1500, 2500) / 1000)) * $scope.players.length);
+            rollList(list, stopIndex, timeoutTimePerJump);
         });
 
         var checkMusic = $interval(function() {
@@ -106,6 +112,14 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
                 randomizeNextRound();
             }
         }, 100);
+    };
+
+    var getStopPlayerIndex = function(stopArr) {
+        var randomPlayer = Math.floor(Math.random() * $scope.players.length);
+        if (stopArr.indexOf(randomPlayer) >= 0 && $scope.players.length > $scope.lists.length) {
+            return getStopPlayerIndex(stopArr);
+        }
+        return randomPlayer;
     };
 
     function clock() {
@@ -226,13 +240,18 @@ app.controller('DkCtrl', function($scope, $http, $interval, $timeout, ngAudio, $
         };
     };
 
-    function rollList(list) {
+    function rollList(list, playerStopIndex, timeoutTimer) {
         if ($scope.playing) {
             $timeout(function() {
-                nextIndex(list, function() {
-                    rollList(list);
-                });
-            }, (randomTime(10, 400) / 1000));
+                if ($scope.playing) {
+                    nextIndex(list, function() {
+                        rollList(list, playerStopIndex, timeoutTimer);
+                    });
+                }
+            }, timeoutTimer);
+        } else {
+            //console.log('Setting', list, "to", playerStopIndex);
+            //list.index = playerStopIndex;
         }
     }
 
