@@ -7,8 +7,8 @@ var app = express();
 
 //CHANGE VARS
 
-var mongoosePass = process.env.MONGOPASS || "stabenserdigalltid";
-var mongooseName = process.env.MONGODB || "dk";
+var mongoosePass = process.env.MONGOPASS || "pass";
+var mongooseName = process.env.MONGODB || "db";
 var defaultPORT = 3000;
 
 /**
